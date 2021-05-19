@@ -1,6 +1,6 @@
 # 🏷️ Layouts Tag List Widget
 
-> ⚠️ **Note: This widget is unfinished and still in development. Please wait for a release to use a working version of this widget.**
+> ⚠️ **Note: This widget is unfinished and still in development. An alpha version has been released, but please wait for a stable release to use this widget in production.**
 
 ## 🔍 Overview
 
