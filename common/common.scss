@@ -1,0 +1,15 @@
+.l-tag-items {
+  list-style: none;
+  margin-left: 0;
+
+  // todo make site setting to change display style from column wrap/row wrap
+  display: flex;
+  flex-flow: column wrap;
+  li {
+    margin: 0.15rem;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--highlight-low);
+    }
+  }
+}

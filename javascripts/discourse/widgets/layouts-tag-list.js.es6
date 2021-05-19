@@ -49,10 +49,17 @@ createWidget("layouts-tag-link", {
     return html;
   },
 
+  getTagCount(tag) {
+    // todo show count by setting
+    // const html = h("span", toString(tag.count));
+    // return html;
+  },
+
   html(attrs) {
     const contents = [];
 
     contents.push(this.getTagTitle(attrs));
+    contents.push(this.getTagCount(attrs));
     return contents;
   },
 
