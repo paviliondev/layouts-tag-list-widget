@@ -1,0 +1,15 @@
+{
+  "name": "Layouts Tag List Widget",
+  "component": true,
+  "authors": "Keegan George",
+  "theme_version": "0.1.0",
+  "about_url": "https://github.com/paviliondev/layouts-tag-list-widget",
+  "license_url": null,
+  "assets": {
+  },
+  "color_schemes": {
+  },
+  "modifiers": {
+    
+  }
+}
