@@ -1,5 +1,7 @@
 # 🏷️ Layouts Tag List Widget
 
+> ⚠️ **Note: This widget is unfinished and still in development. Please wait for a release to use a working version of this widget.**
+
 ## 🔍 Overview
 
 The Tag List Widget allows you to display tags from Discourse in a sidebar using Pavilion's [Custom Layouts Plugin](https://meta.discourse.org/t/custom-layouts-plugin/55208). See the [installation guide](https://thepavilion.io/t/installation-and-setup/3200) to learn how to install and administer this widget.
