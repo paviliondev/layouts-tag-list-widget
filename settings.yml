@@ -1,0 +1,6 @@
+hide_tags:
+  type: list
+  list_type: tag
+  default: ""
+  description:
+    en: "Select specific tags to hide in the layout"

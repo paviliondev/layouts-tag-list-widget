@@ -39,8 +39,17 @@ export default layouts.createLayoutsWidget("tag-list", {
       return tagList;
     }
 
+    const tagIsHidden = (tag) => {
+      const hiddenTags = settings.hide_tags.split("|");
+      if (hiddenTags.includes(tag.text)) {
+        return true;
+      }
+    };
+
     tags.forEach((tag) => {
-      tagListItems.push(this.attach("layouts-tag-link", tag));
+      if (!tagIsHidden(tag)) {
+        tagListItems.push(this.attach("layouts-tag-link", tag));
+      }
     });
 
     tagList.push(h("ul.l-tag-items", tagListItems));
@@ -53,7 +62,6 @@ createWidget("layouts-tag-link", {
   buildKey: (attrs) => `layouts-tag-link-${attrs.id}`,
 
   getTagTitle(tag) {
-    // todo make tag display type based on discourse setting
     const tagStyle = this.siteSettings.tag_style;
     const html = h(`span.discourse-tag.${tagStyle}`, tag.text);
     return html;
@@ -68,7 +76,7 @@ createWidget("layouts-tag-link", {
   html(attrs) {
     const contents = [];
     contents.push(this.getTagTitle(attrs));
-    contents.push(this.getTagCount(attrs));
+    // contents.push(this.getTagCount(attrs));
     return contents;
   },
 
