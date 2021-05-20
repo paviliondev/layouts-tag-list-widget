@@ -1,9 +1,15 @@
-.l-tags-header {
-  color: var(--primary) !important;
+a.l-tags-header {
+  color: var(--primary);
   font-size: 1.25rem;
   display: inline-block;
   margin-bottom: 0.5rem;
   font-weight: bold;
+  transition: color 0.25s ease;
+
+  &:hover,
+  &:focus {
+    color: var(--primary-low-mid);
+  }
 }
 
 .l-tag-items {
