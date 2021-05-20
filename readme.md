@@ -32,3 +32,4 @@ Version 2:
 
 - [ ] Display tags via tag group categorization
 - [ ] List tags by x most popular tags
+- [ ] Custom theme styles
