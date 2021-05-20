@@ -30,6 +30,7 @@ Version 1:
 
 Version 2:
 
-- [ ] Display tags via tag group categorization
+- [x] Display tags via tag group categorization
+  - [ ] Move to setting/optional
 - [ ] List tags by x most popular tags
 - [ ] Custom theme styles

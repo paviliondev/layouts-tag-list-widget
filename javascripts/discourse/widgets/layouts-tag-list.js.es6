@@ -45,18 +45,21 @@ export default layouts.createLayoutsWidget("tag-list", {
       }
     };
 
-    tags.forEach((tag) => {
-      if (!tagIsHidden(tag)) {
-        tagListItems.push(this.attach("layouts-tag-link", tag));
-      }
-    });
-
+    // console.log(tagGroups);
     tagGroups.forEach((tagGroup) => {
+      tagListItems.push(h("h4", tagGroup.name));
       tagGroup.tags.forEach((tag) => {
         if (!tagIsHidden(tag)) {
           tagListItems.push(this.attach("layouts-tag-link", tag));
         }
       });
+    });
+
+    tagListItems.push(h("h4", "Other Tags")); // todo convert to localization
+    tags.forEach((tag) => {
+      if (!tagIsHidden(tag)) {
+        tagListItems.push(this.attach("layouts-tag-link", tag));
+      }
     });
 
     tagList.push(h("ul.l-tag-items", tagListItems));
