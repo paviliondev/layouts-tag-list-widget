@@ -16,12 +16,11 @@ try {
 
 export default layouts.createLayoutsWidget("tag-list", {
   html(attrs) {
-    const { tags } = attrs;
+    const { tags, tagGroups } = attrs;
     if (tags == null || tags == undefined) return;
 
     const tagListItems = [];
     const tagList = [];
-
     tagList.push(
       h(
         "a.l-tags-header",
@@ -50,6 +49,14 @@ export default layouts.createLayoutsWidget("tag-list", {
       if (!tagIsHidden(tag)) {
         tagListItems.push(this.attach("layouts-tag-link", tag));
       }
+    });
+
+    tagGroups.forEach((tagGroup) => {
+      tagGroup.tags.forEach((tag) => {
+        if (!tagIsHidden(tag)) {
+          tagListItems.push(this.attach("layouts-tag-link", tag));
+        }
+      });
     });
 
     tagList.push(h("ul.l-tag-items", tagListItems));
