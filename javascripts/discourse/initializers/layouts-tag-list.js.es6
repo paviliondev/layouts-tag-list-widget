@@ -25,6 +25,7 @@ export default {
 
       const props = {
         tags,
+        siteSettings,
       };
       layouts.addSidebarProps(props);
     });

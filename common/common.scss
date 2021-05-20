@@ -1,3 +1,11 @@
+.l-tags-header {
+  color: var(--primary) !important;
+  font-size: 1.25rem;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
 .l-tag-items {
   list-style: none;
   margin-left: 0;
@@ -5,11 +13,29 @@
   // todo make site setting to change display style from column wrap/row wrap
   display: flex;
   flex-flow: column wrap;
-  li {
-    margin: 0.15rem;
+
+  .l-tag-link {
     cursor: pointer;
-    &:hover {
-      background-color: var(--highlight-low);
+    margin: 0.15rem;
+
+    .box {
+      transition: background-color 0.25s ease;
+      &:hover {
+        background-color: var(--primary-low-mid);
+      }
+    }
+
+    .bullet {
+      transition: color 0.25s ease;
+      &::before {
+        transition: background-color 0.25s ease;
+      }
+      &:hover {
+        color: var(--primary-high);
+        &::before {
+          background-color: var(--primary-medium);
+        }
+      }
     }
   }
 }

@@ -22,15 +22,24 @@ export default layouts.createLayoutsWidget("tag-list", {
     const tagListItems = [];
     const tagList = [];
 
-    tagList.push(h("h3.l-tags-header", I18n.t(themePrefix("header_title"))));
+    tagList.push(
+      h(
+        "a.l-tags-header",
+        {
+          attributes: {
+            href: "/tags",
+          },
+        },
+        I18n.t(themePrefix("header_title"))
+      )
+    );
 
     if (tags.length == 0) {
-      tagList.push(h("p.l-tag-none", "No tags have been created"));
+      tagList.push(h("a.l-tag-none", I18n.t(themePrefix("no_tags"))));
       return tagList;
     }
 
     tags.forEach((tag) => {
-      //   tagList.push(h("p.discourse-tag", tag.text));
       tagListItems.push(this.attach("layouts-tag-link", tag));
     });
 
@@ -45,7 +54,8 @@ createWidget("layouts-tag-link", {
 
   getTagTitle(tag) {
     // todo make tag display type based on discourse setting
-    const html = h("span.discourse-tag.bullet", tag.text);
+    const tagStyle = this.siteSettings.tag_style;
+    const html = h(`span.discourse-tag.${tagStyle}`, tag.text);
     return html;
   },
 
@@ -57,7 +67,6 @@ createWidget("layouts-tag-link", {
 
   html(attrs) {
     const contents = [];
-
     contents.push(this.getTagTitle(attrs));
     contents.push(this.getTagCount(attrs));
     return contents;
