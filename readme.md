@@ -18,7 +18,7 @@ The Tag List Widget allows you to display tags from Discourse in a sidebar using
 | 🐛 **Found a bug?**   | [Submit a bug report](https://thepavilion.io/w/bug-report/steps/intro)            |
 | ✋ **Have an idea?**  | [Submit a feature request](https://thepavilion.io/w/bug-report/steps/intro)       |
 
-## To Do:
+## 📝 To Do:
 
 Version 1:
 
