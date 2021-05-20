@@ -25,7 +25,7 @@ Version 1:
 - [x] Output tags in widget
 - [x] Clicking on tag links to filtering topics by tag
 - [x] Make tag appearance same as style set in admin settings
-- [ ] Allow user to hide certain tags
+- [x] Allow user to hide certain tags
 - [ ] Polish style and appearance of widget
 
 Version 2:
