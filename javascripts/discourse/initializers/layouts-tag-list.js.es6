@@ -22,7 +22,7 @@ export default {
 
     ajax(`/tags.json`).then((tagList) => {
       const tags = tagList.tags;
-      const tagGroups = tagList.extras.tag_groups; // todo add check for if this exists
+      const tagGroups = tagList.extras.tag_groups;
 
       const props = {
         tags,

@@ -55,7 +55,7 @@ export default layouts.createLayoutsWidget("tag-list", {
       });
     });
 
-    tagListItems.push(h("h4", "Other Tags")); // todo convert to localization
+    tagListItems.push(h("h4", I18n.t(themePrefix("other_tags"))));
     tags.forEach((tag) => {
       if (!tagIsHidden(tag)) {
         tagListItems.push(this.attach("layouts-tag-link", tag));
