@@ -39,7 +39,7 @@ export default layouts.createLayoutsWidget("tag-list", {
     }
 
     const tagIsHidden = (tag) => {
-      const hiddenTags = settings.hide_tags.split("|");
+      const hiddenTags = settings.hidden_tags.split("|");
       if (hiddenTags.includes(tag.text)) {
         return true;
       }

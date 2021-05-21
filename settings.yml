@@ -1,6 +1,14 @@
-hide_tags:
+hidden_tags:
   type: list
   list_type: tag
   default: ""
   description:
     en: "Select specific tags to hide in the layout"
+display_style:
+  default: row
+  type: enum
+  choices:
+    - row
+    - column
+  description:
+    en: "Select how you would like tags to appear. (Row for one after another, column for one on each line)"

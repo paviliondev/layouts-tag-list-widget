@@ -34,4 +34,4 @@ Version 2:
   - [ ] Move to setting/optional
 - [ ] List tags by x most popular tags
 - [ ] Custom theme styles
-- [ ] Add settings for customizing display order
+- [x] Add settings for customizing display order

@@ -16,12 +16,12 @@ a.l-tags-header {
   list-style: none;
   margin-left: 0;
 
-  // todo make site setting to change display style from column wrap/row wrap
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: $display_style wrap;
 
   h4 {
     margin-top: 1rem;
+    flex-basis: 100%;
   }
 
   .l-tag-link {
@@ -30,7 +30,8 @@ a.l-tags-header {
 
     .box {
       transition: background-color 0.25s ease;
-      &:hover {
+      &:hover,
+      &:focus {
         background-color: var(--primary-low-mid);
       }
     }
@@ -40,11 +41,26 @@ a.l-tags-header {
       &::before {
         transition: background-color 0.25s ease;
       }
-      &:hover {
+      &:hover,
+      &:focus {
         color: var(--primary-high);
         &::before {
           background-color: var(--primary-medium);
         }
+      }
+    }
+
+    &:not(:last-child) {
+      .simple::after {
+        content: ","; // todo make only if site setting is on row wrap instead of column wrap
+      }
+    }
+    .simple {
+      transition: color 0.25s ease;
+
+      &:hover,
+      &:focus {
+        color: var(--primary-low-mid);
       }
     }
   }
