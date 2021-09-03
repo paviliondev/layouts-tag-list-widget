@@ -22,7 +22,7 @@ The Tag List Widget allows you to display tags from Discourse in a sidebar using
 
 ## ⚙️ Settings
 
-There are a couple settings that you can configure to customize how the event list widget appears in the layout.
+There are a couple settings that you can configure to customize how the tag list widget appears in the layout.
 
 ### 🙈 Hidden Tags
 
