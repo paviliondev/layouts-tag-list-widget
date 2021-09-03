@@ -1,10 +1,12 @@
 # 🏷️ Layouts Tag List Widget
 
-> ⚠️ **Note: This widget is unfinished and still in development. An alpha version has been released, but please wait for a stable release to use this widget in production.**
-
 ## 🔍 Overview
 
 The Tag List Widget allows you to display tags from Discourse in a sidebar using Pavilion's [Custom Layouts Plugin](https://meta.discourse.org/t/custom-layouts-plugin/55208). See the [installation guide](https://thepavilion.io/t/installation-and-setup/3200) to learn how to install and administer this widget.
+
+![Banner Image](screenshots/cover.png)
+
+> ⚠️ **Please ensure that you have tagging enabled in your Discourse settings for this widget to work.**
 
 ## 🔗 Info &amp; Links
 
@@ -13,25 +15,40 @@ The Tag List Widget allows you to display tags from Discourse in a sidebar using
 | ⚙️ **Widget**         | [Layouts Tag List Widget](https://github.com/paviliondev/layouts-tag-list-widget) |
 | 🔌 **Base Plugin**    | [Custom Layouts Widget](https://meta.discourse.org/t/custom-layouts-plugin/55208) |
 | 👨‍💻 **Author**         | [Keegan George](https://github.com/keegangeorge/)                                 |
-| #️⃣ **Version**        | `0.1.0`                                                                           |
+| #️⃣ **Version**        | `1.0.0`                                                                           |
 | ❓ **How to Install** | [Installation Guide](https://thepavilion.io/t/installation-and-setup/3200)        |
 | 🐛 **Found a bug?**   | [Submit a bug report](https://thepavilion.io/w/bug-report/steps/intro)            |
 | ✋ **Have an idea?**  | [Submit a feature request](https://thepavilion.io/w/bug-report/steps/intro)       |
 
-## 📝 To Do:
+## ⚙️ Settings
 
-Version 1:
+There are a couple settings that you can configure to customize how the event list widget appears in the layout.
 
-- [x] Output tags in widget
-- [x] Clicking on tag links to filtering topics by tag
-- [x] Make tag appearance same as style set in admin settings
-- [x] Allow user to hide certain tags
-- [ ] Polish style and appearance of widget
+### 🙈 Hidden Tags
 
-Version 2:
+Select tags from the dropdown you wish to have hidden from the sidebar.
 
-- [x] Display tags via tag group categorization
-  - [ ] Move to setting/optional
-- [ ] List tags by x most popular tags
-- [ ] Custom theme styles
-- [x] Add settings for customizing display order
+### 📄 Display Style
+
+Select between a column or row style layout to display your tags.
+
+| Column                            | Row                         |
+| --------------------------------- | --------------------------- |
+| ![Column](screenshots/column.png) | ![Row](screenshots/row.png) |
+
+### #️⃣ Show Count
+
+Toggling this setting will display the number of topics for each tag beside the tag item.
+
+<img src="screenshots/count.png" width="215">
+
+### 📶 Sort Type
+
+Select the manner in which tags should be sorted.
+
+Options include:
+
+- Count Ascending
+- Count Descending
+- Alphabetical Ascending
+- Alphabetical Descending

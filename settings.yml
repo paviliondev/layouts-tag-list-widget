@@ -1,9 +1,9 @@
 hidden_tags:
   type: list
   list_type: tag
-  default: ""
+  default: ''
   description:
-    en: "Select specific tags to hide in the layout"
+    en: 'Select specific tags to hide in the layout'
 display_style:
   default: row
   type: enum
@@ -11,4 +11,19 @@ display_style:
     - row
     - column
   description:
-    en: "Select how you would like tags to appear. (Row for one after another, column for one on each line)"
+    en: 'Select how you would like tags to appear. (Row for one after another, column for one on each line)'
+show_count:
+  default: false
+  type: bool
+  description:
+    en: 'Show the count beside each tag.'
+sort_type:
+  default: 'Count Descending'
+  type: enum
+  choices:
+    - 'Count Ascending'
+    - 'Count Descending'
+    - 'Alphabetical Ascending'
+    - 'Alphabetical Descending'
+  description:
+    en: 'Select the manner in which tags should be sorted'
