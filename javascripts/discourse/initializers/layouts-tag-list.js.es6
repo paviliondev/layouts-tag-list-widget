@@ -18,7 +18,7 @@ export default {
       console.warn(layoutsError);
     }
 
-    if (layoutsError || !siteSettings.calendar_enabled) return;
+    if (layoutsError) return;
 
     ajax(`/tags.json`).then((tagList) => {
       const tags = tagList.tags;

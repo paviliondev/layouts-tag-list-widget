@@ -1,20 +1,20 @@
-import DiscourseURL from "discourse/lib/url";
-import { createWidget } from "discourse/widgets/widget";
-import { h } from "virtual-dom";
+import DiscourseURL from 'discourse/lib/url';
+import { createWidget } from 'discourse/widgets/widget';
+import { h } from 'virtual-dom';
 
 let layouts;
 
 // Import layouts plugin with safegaurd for when widget exists without plugin:
 try {
   layouts = requirejs(
-    "discourse/plugins/discourse-layouts/discourse/lib/layouts"
+    'discourse/plugins/discourse-layouts/discourse/lib/layouts'
   );
 } catch (error) {
   layouts = { createLayoutsWidget: createWidget };
   console.warn(error);
 }
 
-export default layouts.createLayoutsWidget("tag-list", {
+export default layouts.createLayoutsWidget('tag-list', {
   html(attrs) {
     const { tags, tagGroups } = attrs;
     if (tags == null || tags == undefined) return;
@@ -23,52 +23,52 @@ export default layouts.createLayoutsWidget("tag-list", {
     const tagList = [];
     tagList.push(
       h(
-        "a.l-tags-header",
+        'a.l-tags-header',
         {
           attributes: {
-            href: "/tags",
+            href: '/tags',
           },
         },
-        I18n.t(themePrefix("header_title"))
+        I18n.t(themePrefix('header_title'))
       )
     );
 
     if (tags.length == 0) {
-      tagList.push(h("a.l-tag-none", I18n.t(themePrefix("no_tags"))));
+      tagList.push(h('a.l-tag-none', I18n.t(themePrefix('no_tags'))));
       return tagList;
     }
 
     const tagIsHidden = (tag) => {
-      const hiddenTags = settings.hidden_tags.split("|");
+      const hiddenTags = settings.hidden_tags.split('|');
       if (hiddenTags.includes(tag.text)) {
         return true;
       }
     };
 
-    // console.log(tagGroups);
+    console.log(tagGroups);
     tagGroups.forEach((tagGroup) => {
-      tagListItems.push(h("h4", tagGroup.name));
+      tagListItems.push(h('h4', tagGroup.name));
       tagGroup.tags.forEach((tag) => {
         if (!tagIsHidden(tag)) {
-          tagListItems.push(this.attach("layouts-tag-link", tag));
+          tagListItems.push(this.attach('layouts-tag-link', tag));
         }
       });
     });
 
-    tagListItems.push(h("h4", I18n.t(themePrefix("other_tags"))));
+    tagListItems.push(h('h4', I18n.t(themePrefix('other_tags'))));
     tags.forEach((tag) => {
       if (!tagIsHidden(tag)) {
-        tagListItems.push(this.attach("layouts-tag-link", tag));
+        tagListItems.push(this.attach('layouts-tag-link', tag));
       }
     });
 
-    tagList.push(h("ul.l-tag-items", tagListItems));
+    tagList.push(h('ul.l-tag-items', tagListItems));
     return tagList;
   },
 });
 
-createWidget("layouts-tag-link", {
-  tagName: "li.l-tag-link",
+createWidget('layouts-tag-link', {
+  tagName: 'li.l-tag-link',
   buildKey: (attrs) => `layouts-tag-link-${attrs.id}`,
 
   getTagTitle(tag) {
@@ -85,6 +85,7 @@ createWidget("layouts-tag-link", {
 
   html(attrs) {
     const contents = [];
+    console.log(attrs);
     contents.push(this.getTagTitle(attrs));
     // contents.push(this.getTagCount(attrs));
     return contents;
