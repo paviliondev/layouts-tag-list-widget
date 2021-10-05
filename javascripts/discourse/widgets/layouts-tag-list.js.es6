@@ -34,7 +34,7 @@ export default layouts.createLayoutsWidget('tag-list', {
       )
     );
 
-    if (tags.length == 0) {
+    if (tags.length === 0 && !tagGroups) {
       tagList.push(h('a', I18n.t(themePrefix('no_tags'))));
       return tagList;
     }
@@ -57,12 +57,14 @@ export default layouts.createLayoutsWidget('tag-list', {
         });
       });
 
-      tagListItems.push(h('h4', I18n.t(themePrefix('other_tags'))));
-      tags.forEach((tag) => {
-        if (!tagIsHidden(tag)) {
-          tagListItems.push(this.attach('layouts-tag-link', tag));
-        }
-      });
+      if (tags.length > 0) {
+        tagListItems.push(h('h4', I18n.t(themePrefix('other_tags'))));
+        tags.forEach((tag) => {
+          if (!tagIsHidden(tag)) {
+            tagListItems.push(this.attach('layouts-tag-link', tag));
+          }
+        });
+      }
     } else {
       this.sortTags(tags);
       tags.forEach((tag) => {
