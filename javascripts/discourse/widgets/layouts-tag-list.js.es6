@@ -106,7 +106,16 @@ createWidget('layouts-tag-link', {
 
   getTagTitle(tag) {
     const tagStyle = this.siteSettings.tag_style;
-    const html = h(`span.discourse-tag.${tagStyle}`, tag.text);
+    const html = h(
+      `span.discourse-tag.${tagStyle}`,
+      {
+        attributes: {
+          'data-tag-name': `${tag.text}`,
+        },
+      },
+      tag.text
+    );
+
     return html;
   },
 
