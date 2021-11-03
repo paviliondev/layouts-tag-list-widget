@@ -39,28 +39,30 @@ export default layouts.createLayoutsWidget('tag-list', {
       return tagList;
     }
 
-    const tagIsHidden = (tag) => {
-      const hiddenTags = settings.hidden_tags.split('|');
-      if (hiddenTags.includes(tag.text)) {
+    const isHidden = (item, setting) => {
+      const hiddenItem = setting.split('|');
+      if (hiddenItem.includes(item)) {
         return true;
       }
     };
 
     if (tagGroups) {
       tagGroups.forEach((tagGroup) => {
-        tagListItems.push(h('h4', tagGroup.name));
-        this.sortTags(tagGroup.tags);
-        tagGroup.tags.forEach((tag) => {
-          if (!tagIsHidden(tag)) {
-            tagListItems.push(this.attach('layouts-tag-link', tag));
-          }
-        });
+        if (!isHidden(tagGroup.name, settings.hidden_tag_groups)) {
+          tagListItems.push(h('h4', tagGroup.name));
+          this.sortTags(tagGroup.tags);
+          tagGroup.tags.forEach((tag) => {
+            if (!isHidden(tag.text, settings.hidden_tags)) {
+              tagListItems.push(this.attach('layouts-tag-link', tag));
+            }
+          });
+        }
       });
 
       if (tags.length > 0) {
         tagListItems.push(h('h4', I18n.t(themePrefix('other_tags'))));
         tags.forEach((tag) => {
-          if (!tagIsHidden(tag)) {
+          if (!isHidden(tag.text, settings.hidden_tags)) {
             tagListItems.push(this.attach('layouts-tag-link', tag));
           }
         });
@@ -68,7 +70,7 @@ export default layouts.createLayoutsWidget('tag-list', {
     } else {
       this.sortTags(tags);
       tags.forEach((tag) => {
-        if (!tagIsHidden(tag)) {
+        if (!isHidden(tag.text, settings.hidden_tags)) {
           tagListItems.push(this.attach('layouts-tag-link', tag));
         }
       });

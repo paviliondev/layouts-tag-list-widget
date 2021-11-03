@@ -4,6 +4,11 @@ hidden_tags:
   default: ''
   description:
     en: 'Select specific tags to hide in the layout'
+hidden_tag_groups:
+  type: list
+  default: ''
+  description:
+    en: 'Enter the names of the tag groups you wish to hide in the layout.'
 display_style:
   default: row
   type: enum
