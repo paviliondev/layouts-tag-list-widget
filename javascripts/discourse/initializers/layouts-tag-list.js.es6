@@ -1,4 +1,5 @@
 import { ajax } from 'discourse/lib/ajax';
+import { isHidden } from '../lib/widget-helpers';
 
 export default {
   name: 'layouts-tag-list',
@@ -27,14 +28,29 @@ export default {
     }
 
     ajax(`/tags.json`).then((tagList) => {
-      const tags = tagList.tags;
-      let tagGroups;
+      // Fetch Data:
+      const rawTags = tagList.tags;
+
+      let rawTagGroups;
       if (siteSettings.tags_listed_by_group) {
-        tagGroups = tagList.extras.tag_groups;
+        rawTagGroups = tagList.extras.tag_groups;
       } else {
-        tagGroups = null;
+        rawTagGroups = null;
       }
 
+      // Filter Data:
+      const tagGroups = rawTagGroups.filter((tagGroup) => {
+        tagGroup['tags'] = tagGroup.tags.filter((tag) => {
+          return !isHidden(tag.text, settings.hidden_tags);
+        });
+        return !isHidden(tagGroup.name, settings.hidden_tag_groups);
+      });
+
+      const tags = rawTags.filter((tag) => {
+        return !isHidden(tag.text, settings.hidden_tags);
+      });
+
+      // Export Data:
       const props = {
         tags,
         tagGroups,
