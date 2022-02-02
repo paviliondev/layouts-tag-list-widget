@@ -1,6 +1,6 @@
-import DiscourseURL from 'discourse/lib/url';
 import { createWidget } from 'discourse/widgets/widget';
 import { h } from 'virtual-dom';
+import { isHidden } from '../lib/widget-helpers';
 
 let layouts;
 
@@ -36,33 +36,27 @@ export default layouts.createLayoutsWidget('tag-list', {
     contents.push(this.buildHeader());
 
     if (tags.length === 0 && !tagGroups) {
-      tagList.push(h('a', I18n.t(themePrefix('no_tags'))));
-      return tagList;
+      contents.push(h('a', I18n.t(themePrefix('no_tags'))));
+      return contents;
     }
 
     if (tagGroups) {
       tagGroups.forEach((tagGroup) => {
-        if (!isHidden(tagGroup.name, settings.hidden_tag_groups)) {
-          tagListItems.push(h('h4', tagGroup.name));
-          this.sortTags(tagGroup.tags);
-          tagGroup.tags.forEach((tag) => {
-            if (!isHidden(tag.text, settings.hidden_tags)) {
-              tagListItems.push(this.attach('layouts-tag-link', tag));
-            }
-          });
-        }
+        tagListItems.push(this.attach('layouts-tag-group-link', tagGroup));
       });
 
+      // Other Tags
       if (tags.length > 0) {
-        tagListItems.push(h('h4', I18n.t(themePrefix('other_tags'))));
-        tags.forEach((tag) => {
-          if (!isHidden(tag.text, settings.hidden_tags)) {
-            tagListItems.push(this.attach('layouts-tag-link', tag));
-          }
-        });
+        const otherTagsGroup = {
+          name: I18n.t(themePrefix('other_tags')),
+          tags: tags,
+        };
+        tagListItems.push(
+          this.attach('layouts-tag-group-link', otherTagsGroup)
+        );
       }
     } else {
-      this.sortTags(tags);
+      // this.sortTags(tags);
       tags.forEach((tag) => {
         if (!isHidden(tag.text, settings.hidden_tags)) {
           tagListItems.push(this.attach('layouts-tag-link', tag));
@@ -70,68 +64,7 @@ export default layouts.createLayoutsWidget('tag-list', {
       });
     }
 
-    tagList.push(h('ul.layouts-tag-items', tagListItems));
-    return tagList;
-  },
-
-  sortTags(tags) {
-    const sortType = settings.sort_type;
-
-    switch (sortType) {
-      case 'Count Ascending':
-        return tags.sort((a, b) => (a.count > b.count ? 1 : -1));
-        break;
-      case 'Count Descending':
-        return tags.sort((a, b) => (b.count > a.count ? 1 : -1));
-        break;
-      case 'Alphabetical Ascending':
-        return tags.sort((a, b) => (a.text > b.text ? 1 : -1));
-        break;
-      case 'Alphabetical Descending':
-        return tags.sort((a, b) => (b.text > a.text ? 1 : -1));
-        break;
-      default:
-        return tags.sort((a, b) => (b.count > a.count ? 1 : -1));
-    }
-  },
-});
-
-createWidget('layouts-tag-link', {
-  tagName: 'li.layouts-tag-link',
-  buildKey: (attrs) => `layouts-tag-link-${attrs.id}`,
-
-  getTagTitle(tag) {
-    const tagStyle = this.siteSettings.tag_style;
-    const html = h(
-      `span.discourse-tag.${tagStyle}`,
-      {
-        attributes: {
-          'data-tag-name': `${tag.text}`,
-        },
-      },
-      tag.text
-    );
-
-    return html;
-  },
-
-  getTagCount(tag) {
-    const showCount = settings.show_count;
-
-    if (showCount) {
-      const html = h('span.tag-count', `x ${tag.count.toString()}`);
-      return html;
-    }
-  },
-
-  html(attrs) {
-    const contents = [];
-    contents.push(this.getTagTitle(attrs));
-    contents.push(this.getTagCount(attrs));
+    contents.push(h('ul.layouts-tag-items', tagListItems));
     return contents;
-  },
-
-  click() {
-    DiscourseURL.routeTo(`/tag/${this.attrs.id}`);
   },
 });
