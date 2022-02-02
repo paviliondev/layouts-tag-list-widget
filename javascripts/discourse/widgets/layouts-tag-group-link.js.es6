@@ -30,6 +30,12 @@ createWidget('layouts-tag-group-link', {
     ]);
   },
 
+  defaultState() {
+    return {
+      hideChildren: !settings.tag_groups_default_expanded,
+    };
+  },
+
   html(attrs, state) {
     const contents = [];
     const tagGroupContents = [];

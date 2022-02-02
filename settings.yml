@@ -32,3 +32,8 @@ sort_type:
     - 'Alphabetical Descending'
   description:
     en: 'Select the manner in which tags should be sorted'
+tag_groups_default_expanded:
+  default: true
+  type: bool
+  description:
+    en: 'Check to make tag groups expanded by default'
