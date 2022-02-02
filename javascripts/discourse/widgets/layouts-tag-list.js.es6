@@ -40,13 +40,6 @@ export default layouts.createLayoutsWidget('tag-list', {
       return tagList;
     }
 
-    const isHidden = (item, setting) => {
-      const hiddenItem = setting.split('|');
-      if (hiddenItem.includes(item)) {
-        return true;
-      }
-    };
-
     if (tagGroups) {
       tagGroups.forEach((tagGroup) => {
         if (!isHidden(tagGroup.name, settings.hidden_tag_groups)) {
