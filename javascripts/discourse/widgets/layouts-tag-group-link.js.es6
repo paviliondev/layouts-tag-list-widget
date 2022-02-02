@@ -3,7 +3,7 @@ import { createWidget } from 'discourse/widgets/widget';
 import { h } from 'virtual-dom';
 
 createWidget('layouts-tag-group-link', {
-  tagName: 'ul.layouts-tag-group-link',
+  tagName: 'ul.layouts-tag-group',
   buildKey: (attrs) => `layouts-tag-group-link-${attrs.id}`,
 
   buildTitle(attrs) {
@@ -32,13 +32,14 @@ createWidget('layouts-tag-group-link', {
 
   html(attrs, state) {
     const contents = [];
-
+    const tagGroupContents = [];
     contents.push(this.buildTogglerButton(attrs));
 
     if (!state.hideChildren) {
       attrs.tags.forEach((tag) => {
-        contents.push(this.attach('layouts-tag-link', tag));
+        tagGroupContents.push(this.attach('layouts-tag-link', tag));
       });
+      contents.push(h('div.layouts-tag-group-contents', tagGroupContents));
     }
 
     return contents;

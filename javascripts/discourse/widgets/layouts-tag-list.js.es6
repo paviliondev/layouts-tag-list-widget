@@ -56,12 +56,13 @@ export default layouts.createLayoutsWidget('tag-list', {
         );
       }
     } else {
-      // this.sortTags(tags);
+      const tagItems = [];
       tags.forEach((tag) => {
         if (!isHidden(tag.text, settings.hidden_tags)) {
-          tagListItems.push(this.attach('layouts-tag-link', tag));
+          tagItems.push(this.attach('layouts-tag-link', tag));
         }
       });
+      tagListItems.push(h('div.layouts-tag-contents', tagItems));
     }
 
     contents.push(h('ul.layouts-tag-items', tagListItems));
