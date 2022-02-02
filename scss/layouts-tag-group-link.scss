@@ -33,3 +33,10 @@
     flex-flow: $display-style wrap;
   }
 }
+
+.sidebar.full {
+  .layouts-tag-list .layouts-tag-group-contents {
+    background: none;
+    border: none;
+  }
+}
