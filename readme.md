@@ -4,7 +4,7 @@
 
 The Tag List Widget allows you to display tags from Discourse in a sidebar using Pavilion's [Custom Layouts Plugin](https://meta.discourse.org/t/custom-layouts-plugin/55208). See the [installation guide](https://thepavilion.io/t/installation-and-setup/3200) to learn how to install and administer this widget.
 
-![Banner Image](screenshots/cover.png)
+![Banner Image](.github/images/cover.png)
 
 > ⚠️ **Please ensure that you have tagging enabled in your Discourse settings for this widget to work.**
 
@@ -32,15 +32,15 @@ Select tags from the dropdown you wish to have hidden from the sidebar.
 
 Select between a column or row style layout to display your tags.
 
-| Column                            | Row                         |
-| --------------------------------- | --------------------------- |
-| ![Column](screenshots/column.png) | ![Row](screenshots/row.png) |
+| Column                               | Row                             |
+| ------------------------------------ | ------------------------------- |
+| ![Column](.github/images/column.png) | ![Row](.github/images//row.png) |
 
 ### #️⃣ Show Count
 
 Toggling this setting will display the number of topics for each tag beside the tag item.
 
-<img src="screenshots/count.png" width="215">
+<img src=".github/images//count.png" width="215">
 
 ### 📶 Sort Type
 
