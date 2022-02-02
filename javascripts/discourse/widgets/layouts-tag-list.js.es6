@@ -15,24 +15,25 @@ try {
 }
 
 export default layouts.createLayoutsWidget('tag-list', {
+  buildHeader() {
+    const tagName = 'a';
+    const classNames = ['layouts-tag-list-header'];
+    const attributes = {
+      href: '/tags',
+    };
+    const headerTitle = I18n.t(themePrefix('header_title'));
+
+    return h(`${tagName}.${classNames.join('.')}`, attributes, headerTitle);
+  },
+
   html(attrs) {
     const { tags, tagGroups } = attrs;
 
     if (tags == null || tags == undefined) return;
 
     const tagListItems = [];
-    const tagList = [];
-    tagList.push(
-      h(
-        'a.layouts-tag-list-header',
-        {
-          attributes: {
-            href: '/tags',
-          },
-        },
-        I18n.t(themePrefix('header_title'))
-      )
-    );
+    const contents = [];
+    contents.push(this.buildHeader());
 
     if (tags.length === 0 && !tagGroups) {
       tagList.push(h('a', I18n.t(themePrefix('no_tags'))));
