@@ -14,7 +14,7 @@ try {
   console.warn(error);
 }
 
-export default layouts.createLayoutsWidget('tag-list', {
+export default layouts.createLayoutsWidget('layouts-tag-list', {
   buildHeader() {
     const tagName = 'a';
     const classNames = ['layouts-tag-list-header'];
