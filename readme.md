@@ -2,7 +2,7 @@
 
 ## 🔍 Overview
 
-The Tag List Widget allows you to display tags from Discourse in a sidebar using Pavilion's [Custom Layouts Plugin](https://meta.discourse.org/t/custom-layouts-plugin/55208). See the [installation guide](https://thepavilion.io/t/installation-and-setup/3200) to learn how to install and administer this widget.
+The Tag List Widget allows you to display tags from Discourse in a sidebar using Pavilion's [Custom Layouts Plugin](https://meta.discourse.org/t/custom-layouts-plugin/55208) or Discourse's Right Sidebar Blocks Component. See the [installation guide](https://thepavilion.io/t/installation-and-setup/3200) to learn how to install and administer this widget.
 
 ![Banner Image](.github/images/cover.png)
 
@@ -14,8 +14,8 @@ The Tag List Widget allows you to display tags from Discourse in a sidebar using
 | --------------------- | --------------------------------------------------------------------------------- |
 | ⚙️ **Widget**         | [Layouts Tag List Widget](https://github.com/paviliondev/layouts-tag-list-widget) |
 | 🔌 **Base Plugin**    | [Custom Layouts Widget](https://meta.discourse.org/t/custom-layouts-plugin/55208) |
-| 👨‍💻 **Author**         | [Keegan George](https://github.com/keegangeorge/)                                 |
-| #️⃣ **Version**        | `1.1.0`                                                                           |
+| 👨‍💻 **Author**         | [Keegan George](https://github.com/keegangeorge/), [Merefield](https://github.com/merefield/)|
+| #️⃣ **Version**        | `1.2.0`                                                                           |
 | ❓ **How to Install** | [Installation Guide](https://thepavilion.io/t/installation-and-setup/3200)        |
 | 🐛 **Found a bug?**   | [Submit a bug report](https://thepavilion.io/w/bug-report/steps/intro)            |
 | ✋ **Have an idea?**  | [Submit a feature request](https://thepavilion.io/w/bug-report/steps/intro)       |

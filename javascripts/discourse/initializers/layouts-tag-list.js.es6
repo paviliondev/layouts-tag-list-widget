@@ -26,39 +26,5 @@ export default {
         'To use this widget, please enable the site setting: tagging_enabled'
       );
     }
-
-    ajax(`/tags.json`).then((tagList) => {
-      // If site is using Tag Groups:
-      let rawTagGroups;
-      let tagGroups;
-
-      if (siteSettings.tags_listed_by_group) {
-        rawTagGroups = tagList.extras.tag_groups;
-        tagGroups = rawTagGroups.filter((tagGroup) => {
-          tagGroup['tags'] = tagGroup.tags.filter((tag) => {
-            return !isHidden(tag.text, settings.hidden_tags);
-          });
-          sortTags(tagGroup.tags);
-          return !isHidden(tagGroup.name, settings.hidden_tag_groups);
-        });
-      } else {
-        rawTagGroups = null;
-        tagGroups = null;
-      }
-
-      // If site is not using Tag Groups:
-      const rawTags = tagList.tags;
-      const tags = rawTags.filter((tag) => {
-        return !isHidden(tag.text, settings.hidden_tags);
-      });
-      sortTags(tags);
-
-      const props = {
-        tags,
-        tagGroups,
-        siteSettings,
-      };
-      layouts.addSidebarProps(props);
-    });
-  },
+  }
 };

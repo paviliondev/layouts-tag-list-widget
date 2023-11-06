@@ -1,6 +1,11 @@
 import { createWidget } from 'discourse/widgets/widget';
+import { isHidden, sortTags } from '../lib/widget-helpers';
+import { ajax } from 'discourse/lib/ajax';
+import RenderGlimmer from "discourse/widgets/render-glimmer";
+import { hbs } from "ember-cli-htmlbars";
+import { inject as service } from "@ember/service";
 import { h } from 'virtual-dom';
-import { isHidden } from '../lib/widget-helpers';
+import DiscourseURL from 'discourse/lib/url';
 
 let layouts;
 
@@ -14,58 +19,141 @@ try {
   console.warn(error);
 }
 
-export default layouts.createLayoutsWidget('layouts-tag-list', {
-  buildHeader() {
-    const tagName = 'a';
-    const classNames = ['layouts-tag-list-header'];
-    const attributes = {
-      href: '/tags',
-    };
-    const headerTitle = I18n.t(themePrefix('header_title'));
+export default layouts.createLayoutsWidget('tag-list', {
+  // tagname: "div.layouts-tag-list",
+  buildKey: () => `layouts-tag-list`,
 
-    return h(`${tagName}.${classNames.join('.')}`, attributes, headerTitle);
+  defaultState() {
+    return {
+      loading: false,
+      loaded: false,
+      tags: null,
+      tagGroups: null,
+      siteSettings: this.siteSettings,
+      settings: settings,
+    };
   },
 
-  html(attrs) {
-    const { tags, tagGroups } = attrs;
+  siteSettings: service(),
 
-    if (tags == null || tags == undefined) return;
-
-    const tagListItems = [];
-    const contents = [];
-    contents.push(this.buildHeader());
-
-    if (tags.length === 0 && !tagGroups) {
-      contents.push(h('a', I18n.t(themePrefix('no_tags'))));
-      return contents;
+  getTags(state) {
+    if (state.loading) {
+      return;
     }
 
-    if (tagGroups) {
-      tagGroups.forEach((tagGroup) => {
-        tagListItems.push(this.attach('layouts-tag-group-link', tagGroup));
-      });
+    state.loading = true;
 
-      // Other Tags
-      if (tags.length > 0) {
-        const otherTagsGroup = {
-          name: I18n.t(themePrefix('other_tags')),
-          tags: tags,
-        };
-        tagListItems.push(
-          this.attach('layouts-tag-group-link', otherTagsGroup)
-        );
+    ajax(`/tags.json`).then((tagList) => {
+      // If site is using Tag Groups:
+      let rawTagGroups;
+      let tagGroups;
+
+      if (this.state.siteSettings.tags_listed_by_group) {
+        rawTagGroups = tagList.extras.tag_groups;
+        rawTagGroups = rawTagGroups.map((rawGroup) => (
+          { ...rawGroup, hidden: !this.state.settings.tag_groups_default_expanded }
+        ));
+        tagGroups = rawTagGroups.filter((tagGroup) => {
+          tagGroup['tags'] = tagGroup.tags.filter((tag) => {
+            return !isHidden(tag.text, this.state.settings.hidden_tags);
+          });
+          sortTags(tagGroup.tags);
+          return !isHidden(tagGroup.name, this.state.settings.hidden_tag_groups);
+        });
+      } else {
+        rawTagGroups = null;
+        tagGroups = null;
       }
-    } else {
-      const tagItems = [];
-      tags.forEach((tag) => {
-        if (!isHidden(tag.text, settings.hidden_tags)) {
-          tagItems.push(this.attach('layouts-tag-link', tag));
-        }
+
+      // If site is not using Tag Groups:
+      const rawTags = tagList.tags;
+      const tags = rawTags.filter((tag) => {
+        return !isHidden(tag.text, state.settings.hidden_tags);
       });
-      tagListItems.push(h('div.layouts-tag-contents', tagItems));
+      sortTags(tags);
+      state.loaded = true;
+      state.loading = false;
+      state.tags = tags;
+      state.tagGroups = tagGroups;
+      this.scheduleRerender();
+    });
+  },
+
+  html(attrs, state) {
+    if (!state.loaded) {
+      this.getTags(state);
     }
 
-    contents.push(h('ul.layouts-tag-items', tagListItems));
+    if (state.loading) {
+      return [h("div.spinner-container", h("div.spinner"))];
+    }
+
+    const contents = [];
+
+    contents.push(
+      new RenderGlimmer(
+        this,
+        "div.tag-list",
+        hbs`<a href="/tags" class="layouts-tag-list-header">{{@data.headerTitle}}</a>
+        {{#unless @data.tags.length}}
+          <a>{{@data.noTags}}</a>
+        {{else}}
+          <ul class="layouts-tag-items">
+            {{#if @data.tagGroups}}
+              {{#each @data.tagGroups as |tagGroup|}}
+                <ul class="layouts-tag-group">
+                  <button class="layouts-tag-group-toggler" onClick={{action @data.onGroupButtonClick tagGroup}}>
+                    {{#if tagGroup.hidden}}
+                      {{d-icon "caret-right"}}
+                    {{else}}
+                      {{d-icon "caret-down"}}
+                    {{/if}}
+                    {{tagGroup.name}}
+                  </button>
+                  {{! Tag Group Contents }}
+                  {{#unless tagGroup.hidden}}
+                    <div class="layouts-tag-group-contents">
+                      {{#each tagGroup.tags as |tag|}}
+                        <li class="layouts-tag-link" data-tag-name="{{tag.text}}" onClick={{action @data.onTagClick tag}}>
+                          <span class="discourse-tag {{@data.tagStyle}}">{{tag.text}}</span>
+                          {{#if @data.showCount}}
+                            <span class="tag-count">x {{tag.count}}</span>
+                          {{/if}}
+                        </li>
+                      {{/each}}
+                    </div>
+                  {{/unless}}
+                </ul>
+              {{/each}}
+            {{/if}}
+          </ul>
+        {{/unless}}`,
+        {
+          ...attrs,
+          tags: state.tags,
+          tagGroups: state.tagGroups,
+          noTags: I18n.t(themePrefix('no_tags')),
+          showCount: settings.show_count,
+          tagStyle: state.siteSettings.tag_style,
+          onTagClick: this.onTagClick.bind(this),
+          onGroupButtonClick: this.onGroupButtonClick.bind(this),
+          headerTitle: I18n.t(themePrefix('header_title')),
+        }
+      ),
+    );
     return contents;
+  },
+
+  onTagClick(tag) {
+    DiscourseURL.routeTo(`/tag/${tag.id}`);
+  },
+
+  onGroupButtonClick(group) {
+    this.state.tagGroups.map((tagGroup) => {
+      if (group.name === tagGroup.name) {
+        tagGroup.hidden = !tagGroup.hidden;
+      }
+    })
+    this.scheduleRerender();
   },
 });
