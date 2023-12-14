@@ -6,6 +6,7 @@ import { hbs } from "ember-cli-htmlbars";
 import { inject as service } from "@ember/service";
 import { h } from 'virtual-dom';
 import DiscourseURL from 'discourse/lib/url';
+import { getOwner } from "discourse-common/lib/get-owner";
 
 let layouts;
 
@@ -20,11 +21,11 @@ try {
 }
 
 export default layouts.createLayoutsWidget('tag-list', {
-  // tagname: "div.layouts-tag-list",
   buildKey: () => `layouts-tag-list`,
 
   defaultState() {
-    return {
+    const session = getOwner(this).lookup("session:main");
+    const defaultValue = {
       loading: false,
       loaded: false,
       tags: null,
@@ -32,6 +33,26 @@ export default layouts.createLayoutsWidget('tag-list', {
       siteSettings: this.siteSettings,
       settings: settings,
     };
+
+    let tags, tagGroups;
+
+    tags = session.get("layouts_tag_list_widget_tags")
+    tagGroups = session.get("layouts_tag_list_widget_tag_groups");
+
+    let sessionData = null;
+
+    if (tags) {
+      sessionData = {
+        loading: false,
+        loaded: true,
+        tags: tags,
+        tagGroups: tagGroups,
+        siteSettings: this.siteSettings,
+        settings: settings,
+      }
+    }
+
+    return sessionData || defaultValue;
   },
 
   siteSettings: service(),
@@ -75,6 +96,9 @@ export default layouts.createLayoutsWidget('tag-list', {
       state.loading = false;
       state.tags = tags;
       state.tagGroups = tagGroups;
+      const session = getOwner(this).lookup("session:main");
+      session.set("layouts_tag_list_widget_tags", tags);
+      session.set("layouts_tag_list_widget_tag_groups", tagGroups);
       this.scheduleRerender();
     });
   },
