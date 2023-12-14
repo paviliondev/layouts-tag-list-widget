@@ -6,7 +6,7 @@ import { hbs } from "ember-cli-htmlbars";
 import { inject as service } from "@ember/service";
 import { h } from 'virtual-dom';
 import DiscourseURL from 'discourse/lib/url';
-import { getOwner } from "discourse-common/lib/get-owner";
+import { getOwner } from '@ember/application';
 
 let layouts;
 
